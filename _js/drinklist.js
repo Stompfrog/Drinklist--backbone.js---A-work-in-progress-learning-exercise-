@@ -14,7 +14,9 @@
 		initialize: function (models, options) {
 		  //this.bind("add", options.view.renderDrink);
 		  //Listen for new additions to the collection and call a view function if so
-		}
+		},
+		localStorage: new Store("drinks")
+		
 	});
 	
 	window.drinksList = new Drinks;
@@ -43,6 +45,8 @@
 		
 		initialize: function () {
 			drinksList.bind('add', this.addOne, this);
+      		drinksList.bind('reset', this.addAll, this);
+			drinksList.fetch();
 		},
 		
 		events: {
@@ -59,9 +63,14 @@
 			    cont: $('#person-form #cont').val()
 			}
 	      	var drink_model = new Drink(data);
-		    drinksList.add( drink_model );
+		    drinksList.create(drink_model);
 	    },
-	    	    
+	    
+		// Add all items in the **Todos** collection at once.
+		addAll: function() {
+			drinksList.each(this.addOne);
+		},
+    	    	    
 		addOne: function(drink) {	
 			var view = new DrinkView({model: drink});
 			$('#drinklist').append(view.render().el);

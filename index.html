@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Tea List</title>
+	<link rel="stylesheet" href="_css/bootstrap.min.css" />
+	<link rel="stylesheet" href="_css/custom.css" />
+</head>
+<body>
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="#">Drinklist</a>
+
+          <!--ul class="nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <form action="" class="pull-right">
+            <input class="input-small" type="text" placeholder="Search...">
+            <button class="btn" type="submit">Go</button>
+          </form-->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+          <h1>Welcome to Drinklist</h1>
+        </div>
+        <div class="row">
+          <div class="span10">
+            <h2>Drinklist</h2>
+            <ul id="drinklist"></ul>
+          </div>
+          <div class="span4">
+            <form id="person-form" class="row form-stacked" action="#">
+            	<fieldset>
+            		<legend>How do they like it?</legend> 	
+	            	<div class="clearfix">
+			            <label for="name">Name:</label>
+						<div class="input">
+							<input id="name" class="span4" type="text"  placeholder="e.g. Mr Teapot" name="name">
+						</div>
+					</div>		
+					<div class="clearfix">
+			            <label for="drink">Drink of choice</label>
+			            <div class="input">
+							<select class="span4" id="drink" name="drink">
+								<option>Tea</option>
+								<option>Coffee</option>
+							</select>
+			            </div>
+			        </div>			            
+					<div class="clearfix">
+			            <label for="milk">Want milk?</label>
+			            <div class="input">
+							<select class="span4" id="milk" name="milk">
+								<option value="no milk">Black</option>
+								<option value="a spot of milk">Brown</option>
+								<option value="milk">White</option>
+								<option value="extra milk">Extra white</option>
+							</select>
+			            </div>
+			        </div>			            
+					<div class="clearfix">
+			            <label for="sugar">How many sugars?</label>
+			            <div class="input">
+							<select class="span4" id="sugar" name="sugar">
+								<option>0</option>
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5+</option>
+							</select>
+			            </div>
+			        </div>			            
+					<div class="clearfix">
+			            <label for="cont">Served in?</label>
+			            <div class="input">
+							<select class="span4" id="cont" name="cont">
+								<option>Mug</option>
+								<option>Cup</option>
+								<option>Glass</option>
+							</select>
+			          </div>
+			        </div>	
+               	</fieldset>
+		        <div class="actions">
+		            <button class="btn primary" type="submit">Go!</button>
+		        </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>Tealist 2011 - A <a href="http://twitter.com/stopfrog">@stompfrog</a> creation</p>
+
+      </footer>
+
+    </div> <!-- /container -->
+    
+    
+    <script type="text/template" id="person-template">
+    	<li>
+    	<strong class="name"><%= name %></strong>:
+    	<span class="drink"><%= drink %></span> in a <span class="cont"><%= cont %></span> with  <span class="milk"><%= milk %></span> and <span class="sugar"><%= sugar %></span> <%= sugar == 1 ? 'sugar' : 'sugars' %>.
+
+    	</li>
+    </script>
+    
+    <script src="_js/jquery.min.js"></script>
+    <script src="_js/underscore.js"></script>
+    <script src="_js/backbone.js"></script>
+    <script src="_js/drinklist.js"></script>
+    
+
+ </body>
+</html>

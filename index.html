@@ -24,12 +24,13 @@
         <div class="row">
           <div class="span10">
             <h2>Drinklist</h2>
-            <ul id="drinklist"></ul>
+            <ul id="drinklist">
+            </ul>
           </div>
           <div class="span4">
             <form id="person-form" class="row form-stacked" action="#">
             	<fieldset>
-            		<legend>How do they like it?</legend> 	
+            		<legend>Add a new person</legend> 	
 	            	<div class="clearfix">
 			            <label for="name">Name:</label>
 						<div class="input">
@@ -97,11 +98,8 @@
     
     
     <script type="text/template" id="person-template">
-    	<li>
-    	<strong class="name"><%= name %></strong>:
-    	<span class="drink"><%= drink %></span> in a <span class="cont"><%= cont %></span> with  <span class="milk"><%= milk %></span> and <span class="sugar"><%= sugar %></span> <%= sugar == 1 ? 'sugar' : 'sugars' %>.
-
-    	</li>
+    	<strong class="name"><%= name %></strong>
+    	<span class="drink label"><%= drink %></span> in a <span class="cont label notice"><%= cont %></span> with  <span class="milk label success"><%= milk %></span> and <span class="sugar label warning"><%= sugar %> <%= sugar == 1 ? 'sugar' : 'sugars' %></span>
     </script>
     
     <script src="_js/jquery.min.js"></script>

@@ -4,3 +4,21 @@
 .page-header{
 	padding:20px 0;
 }
+#drinklist{
+	margin:10px 0;
+}
+#drinklist strong{
+	color:#333;
+	display:inline-block;
+	border-right:1px solid #ccc;
+	padding-right:10px;
+	margin-right:10px;
+}
+#drinklist li{
+	border:1px solid #ccc;
+	border-radius: 5px;
+	list-style: none;
+	padding:10px;
+	background:#efefef;
+	margin-bottom:10px;
+}

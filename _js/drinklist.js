@@ -10,7 +10,6 @@
 	});
 	
 	Drinks = Backbone.Collection.extend({
-		//This is our Friends collection and holds our Friend models
 		initialize: function (models, options) {
 		  //this.bind("add", options.view.renderDrink);
 		  //Listen for new additions to the collection and call a view function if so
@@ -66,7 +65,7 @@
 		    drinksList.create(drink_model);
 	    },
 	    
-		// Add all items in the **Todos** collection at once.
+		// Add all items in the collection at once.
 		addAll: function() {
 			drinksList.each(this.addOne);
 		},

@@ -93,7 +93,7 @@
         			<li>
         				<strong>People</strong>
 	    				<ul>
-		        			<li>Remove people</li>
+		        			<li><s>Remove people</s></li>
 		        			<li>Edit people</li>
 		        			<li>Reorder people</li>
 		        		</ul>
@@ -135,6 +135,7 @@
     
     
     <script type="text/template" id="person-template">
+    	<a href="#" class="delete label important pull-right">Delete</a>
     	<strong class="name"><%= name %></strong>
     	<span class="drink label"><%= drink %></span> in a <span class="cont label notice"><%= cont %></span> with  <span class="milk label success"><%= milk %></span> and <span class="sugar label warning"><%= sugar %> <%= sugar == 1 ? 'sugar' : 'sugars' %></span>
     </script>

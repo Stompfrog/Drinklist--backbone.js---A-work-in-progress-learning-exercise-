@@ -1,7 +1,7 @@
 (function ($) {
-  
+
+	// Define data structure for a Drink
 	Drink = Backbone.Model.extend({
-		//Create a model to hold friend atribute
 		name: 'Name unknown',
 		drink: 'Drink unknown',
 		milk: 'Milk unknown',
@@ -9,18 +9,14 @@
 		cont: 'cont unknown'
 	});
 	
+	// Create a Collection to store Drinks
 	Drinks = Backbone.Collection.extend({
-		initialize: function (models, options) {
-		  //this.bind("add", options.view.renderDrink);
-		  //Listen for new additions to the collection and call a view function if so
-		},
-		localStorage: new Store("drinks")
-		
+		initialize: function (models, options) {},
+		localStorage: new Store("drinks")		
 	});
-	
 	window.drinksList = new Drinks;
 	
-	
+	// Create a drink view to represent a drink model in the DOM
 	DrinkView = Backbone.View.extend({
 
 		tagName:  "li",
@@ -29,8 +25,23 @@
 		
 		initialize: function() {    
 			this.model.bind('change', this.render, this);
+      		this.model.bind('destroy', this.removeDrinkFromDom, this);
 		},
 		
+		events: {
+			"click .delete":  "removeDrinkModel"
+		},
+		
+		removeDrinkFromDom: function(){
+			$(this.el).remove();
+		},
+
+	    removeDrinkModel: function(e) {
+			e.preventDefault();
+	      	this.model.destroy();
+	    },
+
+
 		render: function(model) {
 			$(this.el).html(this.template(this.model.toJSON()));
 			return this;
@@ -38,6 +49,7 @@
 			
 	});
   
+  	// Create an overall view for the application
 	AppView = Backbone.View.extend({
 	
 		el: $("body"),
@@ -65,7 +77,6 @@
 		    drinksList.create(drink_model);
 	    },
 	    
-		// Add all items in the collection at once.
 		addAll: function() {
 			drinksList.each(this.addOne);
 		},

@@ -2,11 +2,14 @@
 
 	// Define data structure for a Drink
 	Drink = Backbone.Model.extend({
-		name: 'Name unknown',
-		drink: 'Drink unknown',
-		milk: 'Milk unknown',
-		sugar: 'Sugar unknown',
-		cont: 'cont unknown'
+		defaults : {
+			name: '',
+			drink: '',
+			milk: '',
+			sugar: '',
+			cont: '',
+			edit: false
+		}
 	});
 	
 	// Create a Collection to store Drinks
@@ -29,7 +32,8 @@
 		},
 		
 		events: {
-			"click .delete":  "removeDrinkModel"
+			"click .delete":  "removeDrinkModel",
+			"click .edit":  "editDrinkModel"
 		},
 		
 		removeDrinkFromDom: function(){
@@ -41,6 +45,11 @@
 	      	this.model.destroy();
 	    },
 
+	    editDrinkModel: function(e) {
+			e.preventDefault();
+			this.model.set({edit:true});
+	      	myFormView.model.set(this.model.toJSON());
+	    },
 
 		render: function(model) {
 			$(this.el).html(this.template(this.model.toJSON()));
@@ -48,7 +57,54 @@
 		}
 			
 	});
-  
+	
+	// Create a view for the drink preference form	
+	FormView = Backbone.View.extend({
+		
+		tagName:  "div",
+		
+		template: _.template($('#form-template').html()),
+		
+		initialize: function() {    
+			this.model.bind('change', this.render, this);
+		},
+
+		events: {
+			"click #add":  "addDrink",
+			"click #cancel":  "reset",
+			"click #update":  "updateDrink"
+		},
+		
+		reset: function(e){
+			e.preventDefault();
+			this.model.set(new Drink());
+		},
+		
+	    addDrink: function(e) {
+	    	e.preventDefault();
+	    	console.log('adding drink');
+			var data = this.$('form').serializeObject();
+	      	var drink_model = new Drink(data);
+		    drinksList.create(drink_model);
+	    },
+
+	    updateDrink: function(e) {
+	    	e.preventDefault();
+	    	console.log('editing drink');
+			var data = this.$('form').serializeObject();
+			drinksList.get(this.model.id).save(data);
+	    },   
+
+		render: function(model) {
+			$(this.el).html(this.template(this.model.toJSON()));
+			return this;
+		}
+		
+		
+	});
+ 	var myFormView = new FormView({model : new Drink()});
+ 	
+ 
   	// Create an overall view for the application
 	AppView = Backbone.View.extend({
 	
@@ -57,25 +113,16 @@
 		initialize: function () {
 			drinksList.bind('add', this.addOne, this);
       		drinksList.bind('reset', this.addAll, this);
+			
+			
 			drinksList.fetch();
+			
+			$('#form').append(myFormView.render().el);			
+			
+			
 		},
 		
-		events: {
-			"submit #person-form":  "addDrink"
-		},
-		    
-	    addDrink: function(e) {
-	    	e.preventDefault();
-	    	var data = { 
-			    name: $('#person-form #name').val(),
-			    drink: $('#person-form #drink').val(),
-			    milk: $('#person-form #milk').val(),
-			    sugar: $('#person-form #sugar').val(),
-			    cont: $('#person-form #cont').val()
-			}
-	      	var drink_model = new Drink(data);
-		    drinksList.create(drink_model);
-	    },
+	    
 	    
 		addAll: function() {
 			drinksList.each(this.addOne);

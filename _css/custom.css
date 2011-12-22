@@ -22,3 +22,21 @@
 	background:#efefef;
 	margin-bottom:10px;
 }
+#drinklist .edit{
+	margin-right:10px;
+}
+#person-form{
+	border:1px solid #ccc;
+	border-radius: 5px;
+	padding:10px;
+	background:#efefef;
+}
+#person-form legend{
+	border-bottom:1px solid #ccc;
+	display: block;	
+	width:100%;
+	padding-bottom:15px;
+}
+.edit-mode{
+	background:#DAEDDA!important;	
+}

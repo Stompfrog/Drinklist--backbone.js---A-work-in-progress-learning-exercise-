@@ -2,8 +2,8 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>Tea List</title>
-	<link rel="stylesheet" href="_css/bootstrap.min.css" />
+	<title>Drinklist</title>
+	<link rel="stylesheet" href="_css/lib/bootstrap.min.css" />
 	<link rel="stylesheet" href="_css/custom.css" />
 </head>
 <body>
@@ -19,70 +19,21 @@
 
       <div class="content">
         <div class="page-header">
+          <div class="alert-message warning">
+	          <p>Drinklist is a simple demo app which has been created for the sole purpose of learning how <a href="http://documentcloud.github.com/backbone/">Backbone.js</a> works. If you are interested in finding out more read the <a href="http://chrisbewick.com/blog/inspiration/backbonejs-time-for-something-new/">related blog post</a> or check out the project <A href="https://github.com/Stompfrog/Drinklist--backbone.js---A-work-in-progress-learning-exercise-">source code on github.</a></p>
+	      </div>
           <h1>Keep track of who wants what!</h1>
         </div>
         <div class="row">
+        	<div class="span16" id="edit">
+        	
+        	</div>
           <div class="span10">
             <h2>Drinklist</h2>
             <ul id="drinklist">
             </ul>
           </div>
-          <div class="span4">
-            <form id="person-form" class="row form-stacked" action="#">
-            	<fieldset>
-            		<legend>Add a new person</legend> 	
-	            	<div class="clearfix">
-			            <label for="name">Name:</label>
-						<div class="input">
-							<input id="name" value="Me" class="span4" type="text"  placeholder="e.g. Mr Teapot" name="name">
-						</div>
-					</div>		
-					<div class="clearfix">
-			            <label for="drink">Drink of choice</label>
-			            <div class="input">
-							<select class="span4" id="drink" name="drink">
-								<option>Tea</option>
-								<option>Coffee</option>
-							</select>
-			            </div>
-			        </div>			            
-					<div class="clearfix">
-			            <label for="milk">Want milk?</label>
-			            <div class="input">
-							<select class="span4" id="milk" name="milk">
-								<option value="no milk">Black</option>
-								<option value="a spot of milk">Brown</option>
-								<option value="milk">White</option>
-								<option value="extra milk">Extra white</option>
-							</select>
-			            </div>
-			        </div>			            
-					<div class="clearfix">
-			            <label for="sugar">How many sugars?</label>
-			            <div class="input">
-							<select class="span4" id="sugar" name="sugar">
-								<option>0</option>
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5+</option>
-							</select>
-			            </div>
-			        </div>			            
-					<div class="clearfix">
-			            <label for="cont">Served in?</label>
-			            <div class="input">
-							<select class="span4" id="cont" name="cont">
-								<option>Mug</option>
-								<option>Cup</option>
-								<option>Glass</option>
-							</select>
-			          </div>
-			        </div>	
-               	</fieldset>
-	            <button class="btn primary" type="submit">Go!</button>
-            </form>
+          <div class="span4 offset2" id="form">
           </div>
         </div>
         <div class="row">
@@ -93,8 +44,9 @@
         			<li>
         				<strong>People</strong>
 	    				<ul>
+		        			<li><s>Add people</s></li>
 		        			<li><s>Remove people</s></li>
-		        			<li>Edit people</li>
+		        			<li><s>Edit people</s></li>
 		        			<li>Reorder people</li>
 		        		</ul>
 		        	</li>
@@ -115,9 +67,12 @@
         				</ul>
         			</li>
 	        		<li>
-	        			<strong>Backend</strong>	
+	        			<strong>Misc</strong>	
 	        			<ul>
 	        				<li>Replace localStorage with Node.js?</li>
+	        				<li>Replace localStorage with Ruby?</li>
+	        				<li>Do custom design/css</li>
+	        				<li>Restructure app files/folders</li>
 	        			</ul>
 	        		</li>
         			<li>...</li>
@@ -136,14 +91,85 @@
     
     <script type="text/template" id="person-template">
     	<a href="#" class="delete label important pull-right">Delete</a>
+    	<a href="#" class="edit label pull-right">Edit</a>
     	<strong class="name"><%= name %></strong>
     	<span class="drink label"><%= drink %></span> in a <span class="cont label notice"><%= cont %></span> with  <span class="milk label success"><%= milk %></span> and <span class="sugar label warning"><%= sugar %> <%= sugar == 1 ? 'sugar' : 'sugars' %></span>
     </script>
     
-    <script src="_js/jquery.min.js"></script>
-    <script src="_js/underscore.js"></script>
-    <script src="_js/backbone.js"></script>
-    <script src="_js/backbone-localstorage.js"></script>
+    <script type="text/template" id="form-template">
+        <form id="person-form" class="row form-stacked<% if(edit){ %> edit-mode<% } %>" action="#">
+        	<fieldset>
+	           	<% if(edit){ %>
+	        		<legend>Editing <%= name %></legend> 	
+	        		<input type="hidden" name="edit" value="true" />
+	           	<% }else{ %>
+	        		<legend>Add a new person</legend> 	
+	           	<% } %>
+            	<div class="clearfix">
+		            <label for="name">Name:</label>
+					<div class="input">
+						<input id="name" value="<%= name %>" class="span4" type="text"  placeholder="e.g. Dave or Claire" name="name">
+					</div>
+				</div>		
+				<div class="clearfix">
+		            <label for="drink">Drink of choice</label>
+		            <div class="input">
+						<select class="span4" id="drink" name="drink">
+							<option<% if(drink == "Tea"){ %> selected<% } %>>Tea</option>
+							<option<% if(drink == "Coffee"){ %> selected<% } %>>Coffee</option>
+						</select>
+		            </div>
+		        </div>			            
+				<div class="clearfix">
+		            <label for="milk">Want milk?</label>
+		            <div class="input">
+						<select class="span4" id="milk" name="milk">
+							<option<% if(milk == "no milk"){ %> selected<% } %> value="no milk">Black</option>
+							<option<% if(milk == "a spot of milk"){ %> selected<% } %> value="a spot of milk">Brown</option>
+							<option<% if(milk == "milk"){ %> selected<% } %> value="milk">White</option>
+							<option<% if(milk == "extra milk"){ %> selected<% } %> value="extra milk">Extra white</option>
+						</select>
+		            </div>
+		        </div>			            
+				<div class="clearfix">
+		            <label for="sugar">How many sugars?</label>
+		            <div class="input">
+						<select class="span4" id="sugar" name="sugar">
+							<option<% if(sugar == "0"){ %> selected<% } %>>0</option>
+							<option<% if(sugar == "1"){ %> selected<% } %>>1</option>
+							<option<% if(sugar == "2"){ %> selected<% } %>>2</option>
+							<option<% if(sugar == "3"){ %> selected<% } %>>3</option>
+							<option<% if(sugar == "4"){ %> selected<% } %>>4</option>
+							<option<% if(sugar == "5+"){ %> selected<% } %>>5+</option>
+						</select>
+		            </div>
+		        </div>			            
+				<div class="clearfix">
+		            <label for="cont">Served in?</label>
+		            <div class="input">
+						<select class="span4" id="cont" name="cont">
+							<option<% if(cont == "Mug"){ %> selected<% } %>>Mug</option>
+							<option<% if(cont == "Cup"){ %> selected<% } %>>Cup</option>
+							<option<% if(cont == "Glass"){ %> selected<% } %>>Glass</option>
+						</select>
+		          </div>
+		        </div>	
+           	</fieldset>
+           	<% if(edit){ %>
+            	<button id="update" class="btn primary" type="submit">Update</button> <a id="cancel" class="btn" href="#">Cancel</a>
+           	<% }else{ %>
+            	<button id="add" class="btn primary" type="submit">Go!</button>
+           	<% } %>
+        </form>
+    </script>
+
+
+
+    <script src="_js/lib/jquery.min.js"></script>
+    <script src="_js/lib/underscore.js"></script>
+    <script src="_js/lib/backbone.js"></script>
+    <script src="_js/lib/backbone-localstorage.js"></script>
+    <script src="_js/helpers.js"></script>
     <script src="_js/drinklist.js"></script>
     
     

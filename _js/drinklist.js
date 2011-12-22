@@ -104,7 +104,6 @@
 	});
  	var myFormView = new FormView({model : new Drink()});
  	
- 
   	// Create an overall view for the application
 	AppView = Backbone.View.extend({
 	
@@ -113,16 +112,11 @@
 		initialize: function () {
 			drinksList.bind('add', this.addOne, this);
       		drinksList.bind('reset', this.addAll, this);
-			
-			
 			drinksList.fetch();
 			
 			$('#form').append(myFormView.render().el);			
 			
-			
 		},
-		
-	    
 	    
 		addAll: function() {
 			drinksList.each(this.addOne);
@@ -132,8 +126,6 @@
 			var view = new DrinkView({model: drink});
 			$('#drinklist').append(view.render().el);
 		}
-	    
-	    
 
   });
   var appview = new AppView;

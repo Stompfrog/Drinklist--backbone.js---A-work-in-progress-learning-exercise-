@@ -76,7 +76,7 @@
 		},
 		
 		reset: function(e){
-			e.preventDefault();
+			if(e) { e.preventDefault(); }
 			this.model.set(new Drink());
 		},
 		
@@ -93,6 +93,7 @@
 	    	console.log('editing drink');
 			var data = this.$('form').serializeObject();
 			drinksList.get(this.model.id).save(data);
+			this.reset();
 	    },   
 
 		render: function(model) {
